@@ -1,6 +1,40 @@
-# LRA – Life Recovery Assistant:
+# Life Recovery Assistant (LRA)
 
-LRA is a productivity and recovery-focused planning system designed for people whose daily schedules often get disrupted.
+Life Recovery Assistant (LRA) is a productivity recovery application designed to help busy people regain control of their day after unexpected disruptions.
+
+Unlike traditional task managers, LRA focuses on what happens when a plan breaks.
+
+The goal is simple: help users quickly recover and continue working on what truly matters.
+
+---
+
+## Problem
+
+Most productivity tools assume a predictable schedule.
+
+Real life is different.
+
+Days are often disrupted by:
+
+- unexpected meetings  
+- family responsibilities  
+- energy drops  
+- urgent tasks  
+- external interruptions  
+
+When a disruption happens, people usually lose their plan and struggle to decide what to do next.
+
+LRA is designed specifically for that moment.
+
+---
+
+## Core Idea
+
+LRA is not just a todo list.
+
+It is a **Daily Planning and Recovery Assistant**.
+
+Users capture tasks quickly, and the system helps them rebuild their plan when the day gets disrupted.
 
 Core concept:
 
@@ -8,67 +42,194 @@ Disruption → Recovery → Continue
 
 ---
 
-## Vision:
+## MVP Flow
 
-Instead of managing endless todo lists manually, users quickly capture tasks and the system helps generate a realistic daily plan.
+Capture → Today → Disruption → Recovery → Continue
 
-When disruptions happen, LRA helps users recover and continue without losing control of their day.
-
----
-
-## Current MVP Scope:
-
-- Quick task capture
-- Daily planning
-- Disruption logging
-- Recovery planning
-- Daily recovery workflow
+1. Capture tasks quickly  
+2. Generate a daily plan  
+3. Work on tasks  
+4. Log disruptions when the plan breaks  
+5. Recover the plan  
+6. Continue the day  
 
 ---
 
-## Tech Stack:
+## MVP Features
 
-Backend:
-- Python
-- Django
-- Django REST Framework (planned)
+The MVP includes only the core functionality needed to validate the product idea.
 
-Database:
-- SQLite (MVP)
+**Quick Capture**  
+Users can create tasks in less than 5 seconds.
 
-Future:
-- PostgreSQL
-- React Native mobile app
+**Daily Planning**  
+The system generates a daily plan based on pending tasks.
 
----
+**Today View**  
+Users see the tasks planned for today.
 
-## Current Project Status:
+**Task Completion**  
+Tasks can be marked as completed.
 
-✅ Django project setup  
-✅ Database models implemented  
-✅ Admin panel configured  
-✅ Initial Git setup completed
+**Disruption Logging**  
+Users can log unexpected events that interrupt their day.
 
----
+**Recovery Engine**  
+The system rebuilds the daily plan after a disruption.
 
-## Run Project:
-
-Activate virtual environment:
-```bash
-venv\Scripts\activate
-```
----
-
-## Run server:
-
-```bash
-python manage.py runserver
-```
+**Recovery History**  
+Recovery sessions are stored for later insights.
 
 ---
 
-## Project Structure:
+## Out of Scope (MVP)
 
-- config/
-- tasks/
-- manage.py
+The following features are intentionally excluded from the MVP.
+
+- AI planner  
+- AI assistant  
+- AI coach  
+- chatbot  
+- voice input  
+- calendar integration  
+- team collaboration  
+- projects or workspaces  
+- subtasks  
+- habit tracking  
+- gamification  
+- offline mode  
+- drag-and-drop scheduling  
+- native mobile app  
+
+These features may appear in future phases.
+
+---
+
+## Domain Model
+
+The core entities of the system are:
+
+- User  
+- Task  
+- DailyPlan  
+- PlannedTask  
+- Disruption  
+- RecoverySession  
+
+Each entity supports the recovery workflow.
+
+---
+
+## Core Business Rules
+
+- Task title is required  
+- Each task belongs to one user  
+- Each user has only one DailyPlan per day  
+- Task status values:
+  - Pending
+  - Completed
+- Recovery can only happen after a disruption  
+- Recovery does not delete tasks  
+- Recovery only moves or keeps pending tasks  
+- Users can override system decisions  
+
+---
+
+## Architecture Overview
+
+The project follows an API-first architecture with a service layer.
+
+System flow:
+
+User  
+↓  
+Raw Tasks  
+↓  
+Planning Engine  
+↓  
+DailyPlan  
+↓  
+Disruption  
+↓  
+Recovery Engine  
+↓  
+Updated DailyPlan  
+
+---
+
+## Project Structure
+
+config/  
+Django project configuration
+
+tasks/  
+Core application
+
+services/  
+Business logic  
+planner.py  
+recovery.py
+
+api/  
+REST API
+
+templates/  
+Minimal web UI
+
+static/  
+Static files
+
+---
+
+## Technology Stack
+
+Backend
+
+- Django  
+- Django REST Framework  
+
+Database
+
+- SQLite (MVP)  
+- PostgreSQL (production)
+
+Frontend (MVP)
+
+- Django Templates
+
+Future Mobile App
+
+- React Native
+
+---
+
+## Design Principles
+
+- Fast task capture  
+- Simple user experience  
+- Minimal cognitive load  
+- Reliable recovery after disruption  
+- Clear separation of business logic  
+
+---
+
+## Project Goal
+
+The goal of the MVP is to validate one key hypothesis:
+
+Users need a fast way to recover their day after disruptions.
+
+If the recovery experience works well, the product can expand with more intelligent planning features.
+
+---
+
+## Future Roadmap
+
+Possible future features include:
+
+- AI-based planning  
+- AI recovery suggestions  
+- mobile application  
+- calendar integration  
+- analytics and insights  
+- subscriptions

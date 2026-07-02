@@ -1,75 +1,197 @@
-# LRA – Life Recovery Assistant
+# PROJECT LOG
 
-## Goal
-Build a mobile-first productivity system that helps users recover when their day gets disrupted.
+Life Recovery Assistant (LRA)
 
-Core concept:
-Disruption → Recovery → Continue
+This file tracks major decisions, scope changes, and technical milestones during the development of LRA.
 
 ---
 
-## Tech Stack
+## Entry Format
 
-Backend:
-- Django
-- Django REST Framework (later)
+Each entry contains:
 
-Database:
-- SQLite (MVP)
-- PostgreSQL (production)
-
-Frontend MVP:
-- Django Templates / Simple HTML
-
-Future:
-- React Native Mobile App
+- Date
+- Area
+- Decision
+- Reason
+- Impact
+- Status
 
 ---
 
-## Current Data Models
+## 2026-07-02
 
-User (Django default)
+### Area
+Product Definition
 
-Task
-- title
-- description
-- priority
-- estimated_minutes
-- status
-- created_at
+### Decision
+Defined LRA as a Daily Planning and Recovery Assistant instead of a traditional todo application.
 
-DailyPlan
-- user
-- date
+### Reason
+The main value of the product is helping users recover their day after disruptions.
 
-PlannedTask
-- daily_plan
-- task
-- order
-- planned_minutes
-- status
+### Impact
+Architecture and domain model were adjusted to support recovery workflows.
 
-Disruption
-- user
-- daily_plan
-- lost_minutes
-- reason
-
-RecoverySession
-- disruption
-- tasks_kept
-- tasks_moved
-- recovery_score
+### Status
+Approved
 
 ---
 
-## Current Progress
+## 2026-07-02
 
-✅ Django project created  
-✅ tasks app created  
-✅ Database models implemented  
-✅ Migrations applied  
-✅ Admin panel working  
+### Area
+Core Product Flow
 
-Next Step:
-Build the **Daily Planning Engine**
+### Decision
+Defined the core user journey:
+
+Capture → Today → Disruption → Recovery → Continue
+
+### Reason
+This represents the real moment of value for users.
+
+### Impact
+All MVP features must support this workflow.
+
+### Status
+Approved
+
+---
+
+## 2026-07-02
+
+### Area
+MVP Scope
+
+### Decision
+Limited the MVP to the minimal recovery workflow.
+
+### Reason
+Smaller scope allows faster development and validation.
+
+### Impact
+Many complex features moved to later phases.
+
+### Status
+Approved
+
+---
+
+## 2026-07-02
+
+### Area
+AI Strategy
+
+### Decision
+AI features are excluded from the MVP.
+
+### Reason
+AI increases complexity and slows early development.
+
+### Impact
+Planning and recovery systems will be rule-based.
+
+### Status
+Approved
+
+---
+
+## 2026-07-02
+
+### Area
+Domain Model
+
+### Decision
+Defined core entities:
+
+- Task
+- DailyPlan
+- PlannedTask
+- Disruption
+- RecoverySession
+
+### Reason
+These entities support the full recovery workflow.
+
+### Impact
+Database design is based on these models.
+
+### Status
+Approved
+
+---
+
+## 2026-07-02
+
+### Area
+Architecture
+
+### Decision
+Adopted service-based architecture.
+
+### Reason
+Business logic should be separated from views and serializers.
+
+### Impact
+Created services layer inside the tasks app.
+
+### Status
+Approved
+
+---
+
+## 2026-07-02
+
+### Area
+Planning Engine
+
+### Decision
+Introduce a rule-based planning engine.
+
+### Reason
+The system must automatically generate daily plans.
+
+### Impact
+Implementation will be in planner.py.
+
+### Status
+In Progress
+
+---
+
+## 2026-07-02
+
+### Area
+Recovery Engine
+
+### Decision
+Design a recovery engine to rebuild plans after disruptions.
+
+### Reason
+Recovery is the core value of LRA.
+
+### Impact
+Implementation will be in recovery.py.
+
+### Status
+Planned
+
+---
+
+## 2026-07-02
+
+### Area
+Database
+
+### Decision
+Use SQLite for MVP.
+
+### Reason
+Simpler setup and faster development.
+
+### Impact
+PostgreSQL will be used in production.
+
+### Status
+Approved
