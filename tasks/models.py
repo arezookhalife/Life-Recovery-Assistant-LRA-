@@ -31,7 +31,12 @@ class Task(models.Model):
         choices=STATUS_CHOICES,
         default='PENDING'
     )
-
+    
+    scheduled_date = models.DateField(null=True, blank=True, help_text="Specific date for the task.")
+    first_tiny_step = models.CharField(max_length=255, null=True, blank=True, help_text="The smallest step to start.")
+    good_enough_definition = models.CharField(max_length=255, null=True, blank=True, help_text="Minimum acceptable result.")
+    postpone_count = models.IntegerField(default=0)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

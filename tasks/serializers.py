@@ -1,9 +1,16 @@
 from rest_framework import serializers
-from .models import DailyPlan, PlannedTask
+from .models import DailyPlan, PlannedTask, Task
 
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = [
+            "id", "title", "priority", "estimated_minutes", 
+            "scheduled_date", "first_tiny_step", "good_enough_definition"
+        ]
 
 class PlannedTaskSerializer(serializers.ModelSerializer):
-    # برای این که اطلاعات خودِ Task (مثل عنوان و اولویت) را در خروجی داشته باشیم:
     task_id = serializers.IntegerField(source="task.id", read_only=True)
     title = serializers.CharField(source="task.title", read_only=True)
     priority = serializers.CharField(source="task.priority", read_only=True)
@@ -25,4 +32,4 @@ class DailyPlanSerializer(serializers.ModelSerializer):
 
 
     def get_total_estimated_minutes(self, obj):
-        return sum(task.planned_minutes for task in obj.planned_tasks.all())
+        return sum(pt.task.estimated_minutes for pt in obj.planned_tasks.all())
