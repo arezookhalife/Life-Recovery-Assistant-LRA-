@@ -16,9 +16,9 @@ High-level flow:
 
 User  
 ↓  
-Task Capture  
+Task Capture (with behavioral metadata)
 ↓  
-Planning Engine  
+Planning Engine (Behavior-aware) 
 ↓  
 Daily Plan  
 ↓  
@@ -45,6 +45,17 @@ The architecture is guided by several principles.
 
 The MVP avoids AI systems.  
 All decisions are deterministic and rule-based.
+
+**Behavior-Aware Design**
+
+The architecture directly supports psychological interventions:
+- breakdown detection
+- tiny first steps
+- cognitive load reduction
+
+**Ethical Gamification**
+
+Motivation mechanics (XP, Streaks) are built into the backend logic without punitive rules.
 
 **Fast Interaction**
 
@@ -80,6 +91,8 @@ PlannedTask → references Task
 Disruption → linked to DailyPlan  
 RecoverySession → linked to Disruption
 
+*Note: The Task model includes behavioral fields such as scheduled_date, first_tiny_step, good_enough_definition, and postpone_count.*
+
 ---
 
 ### 2. Business Logic Layer (Services)
@@ -92,8 +105,9 @@ tasks/services/
 
 Main services:
 
-planner.py  
-recovery.py
+planner.py (Planning engine)  
+recovery.py (Recovery engine)
+gamification.py (XP and progress logic)
 
 Views and APIs should never contain business rules.
 
@@ -130,18 +144,18 @@ Transform raw tasks into a structured daily plan.
 Responsibilities:
 
 - Select pending tasks
-- Sort tasks by priority
-- Estimate available time
+- Filter by user's daily capacity (e.g., 180-240 mins)
+- Prioritize fixed-date tasks (`scheduled_date`)
 - Assign tasks to today's plan
 - Generate PlannedTask objects
 
 Example planning logic:
 
-1. Retrieve all pending tasks
-2. Sort by priority
-3. Allocate time sequentially
-4. Create DailyPlan
-5. Create PlannedTask records
+1. Retrieve pending tasks
+2. Separate fixed-date tasks from flexible tasks
+3. Sort by priority
+4. Allocate within daily capacity limit
+5. Create DailyPlan and PlannedTask records
 
 ---
 
@@ -172,18 +186,37 @@ Recovery strategy:
 
 ---
 
+### Gamification & Behavioral Engine (New)
+
+Location:
+
+tasks/services/gamification.py
+
+Purpose:
+
+Manage ethical user rewards and psychological support.
+
+Responsibilities:
+
+- Calculate XP on task completion
+- Reward "Recovery actions" to encourage resilience
+- Track non-punitive consistency streaks
+- Trigger breakdown suggestions for high postpone counts
+
+---
+
 ## Data Flow
 
 Typical workflow:
 
-1. User creates tasks
+1. User creates tasks (with optional tiny steps)
 2. Tasks are stored as raw tasks
-3. Planning engine builds a DailyPlan
-4. User works on tasks
+3. Planning engine builds a DailyPlan (including fixed-date tasks)
+4. User works on tasks and earns XP
 5. A disruption occurs
 6. User logs disruption
 7. Recovery engine rebuilds the plan
-8. User continues working
+8. User continues working with a fresh plan
 
 ---
 
@@ -200,7 +233,7 @@ tasks/
 Core application
 
 tasks/models.py  
-Database models
+Database models (with behavioral metadata)
 
 tasks/services/  
 Business logic
@@ -210,6 +243,9 @@ Daily planning engine
 
 tasks/services/recovery.py  
 Recovery engine
+
+tasks/services/gamification.py  
+Gamification service
 
 tasks/views.py  
 Web views
@@ -243,13 +279,9 @@ No schema changes required.
 
 The architecture allows several future upgrades.
 
-**AI Planning Engine**
+**AI Coaching Layer**
 
-Replace rule-based planner with AI-assisted planning.
-
-**AI Recovery Assistant**
-
-Suggest better recovery strategies.
+Replace rule-based nudges with AI-assisted coaching and energy-level suggestions.
 
 **Mobile Application**
 
@@ -273,6 +305,7 @@ The architecture prioritizes:
 - fast development
 - reliability
 - clear separation of logic
+- **psychological and emotional safety**
 - future scalability
 
 The MVP architecture intentionally avoids unnecessary complexity while keeping the system ready for future growth.

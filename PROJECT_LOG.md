@@ -18,6 +18,81 @@ Each entry contains:
 - Status
 
 ---
+## 2026-07-12
+
+### Area
+Product Vision & Strategy
+
+### Decision
+Evolved the product from a "Recovery Tool" to a "Behavioral-Aware Planning Assistant" by integrating Psychological Principles and Healthy Gamification into the core MVP.
+
+### Reason
+To increase user engagement and provide deeper value by addressing the root causes of procrastination and perfectionism.
+
+### Impact
+The product roadmap now includes behavioral metadata (tiny steps, energy levels) and gamification elements as core features rather than just future ideas.
+
+### Status
+Approved
+
+---
+
+## 2026-07-12
+
+### Area
+AI Strategy
+
+### Decision
+Reaffirmed that AI is excluded from the MVP, focusing instead on Rule-Based (Deterministic) Logic for planning and recovery.
+
+### Reason
+To ensure predictability, reduce complexity, and establish a solid baseline of rules before adding an intelligent layer.
+
+### Impact
+Planning and recovery systems will be implemented using explicit business rules. AI will be reserved for "Phase 3: AI Coaching Layer."
+
+### Status
+Approved
+
+---
+
+## 2026-07-12
+
+### Area
+Technical Implementation (Planner Engine)
+
+### Decision
+Stabilized the Daily Plan generation API and aligned unit tests with current greedy selection behavior.
+
+### Reason
+To ensure a reliable and testable baseline before implementing more complex task prioritization.
+
+### Impact
+The `test_generate_daily_plan_selects_tasks_within_daily_capacity` test now passes, and the API is stable.
+
+### Status
+Completed
+
+---
+
+## 2026-07-12
+
+### Area
+Technical Implementation (Serializer)
+
+### Decision
+Implemented `total_estimated_minutes` as a dynamic `SerializerMethodField` in `DailyPlanSerializer`.
+
+### Reason
+To avoid `FieldError` and unnecessary database schema changes for a calculated field.
+
+### Impact
+API now correctly returns the total duration of planned tasks.
+
+### Status
+Completed
+
+---
 
 ## 2026-07-02
 

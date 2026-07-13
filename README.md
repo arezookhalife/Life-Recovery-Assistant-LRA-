@@ -6,6 +6,7 @@ Unlike traditional task managers, LRA focuses on what happens when a plan breaks
 
 The goal is simple: help users quickly recover and continue working on what truly matters.
 
+
 ---
 
 ## Problem
@@ -32,9 +33,9 @@ LRA is designed specifically for that moment.
 
 LRA is not just a todo list.
 
-It is a **Daily Planning and Recovery Assistant**.
+It is a **Daily Planning and Recovery Assistant** built on **Behavioral Design**.
 
-Users capture tasks quickly, and the system helps them rebuild their plan when the day gets disrupted.
+Users capture tasks quickly, and the system helps them rebuild their plan when the day gets disrupted, using psychological principles to reduce friction and shame.
 
 Core concept:
 
@@ -63,7 +64,7 @@ The MVP includes only the core functionality needed to validate the product idea
 Users can create tasks in less than 5 seconds.
 
 **Daily Planning**  
-The system generates a daily plan based on pending tasks.
+The system generates a daily plan based on pending tasks and user capacity.
 
 **Today View**  
 Users see the tasks planned for today.
@@ -77,8 +78,11 @@ Users can log unexpected events that interrupt their day.
 **Recovery Engine**  
 The system rebuilds the daily plan after a disruption.
 
-**Recovery History**  
-Recovery sessions are stored for later insights.
+**Behavioral Support**  
+Built-in support for tiny steps and managing task complexity.
+
+**Healthy Gamification**  
+Basic progress tracking and rewards to encourage consistency without pressure.
 
 ---
 
@@ -86,20 +90,16 @@ Recovery sessions are stored for later insights.
 
 The following features are intentionally excluded from the MVP.
 
-- AI planner  
-- AI assistant  
-- AI coach  
-- chatbot  
-- voice input  
-- calendar integration  
-- team collaboration  
-- projects or workspaces  
-- subtasks  
-- habit tracking  
-- gamification  
-- offline mode  
-- drag-and-drop scheduling  
-- native mobile app  
+- AI assistant / AI coach  
+- Voice input  
+- Calendar integration  
+- Team collaboration  
+- Projects or workspaces  
+- Subtasks  
+- Habit tracking  
+- Offline mode  
+- Drag-and-drop scheduling  
+- Native mobile app  
 
 These features may appear in future phases.
 
@@ -110,13 +110,12 @@ These features may appear in future phases.
 The core entities of the system are:
 
 - User  
-- Task  
+- Task (with behavioral metadata) 
 - DailyPlan  
 - PlannedTask  
 - Disruption  
 - RecoverySession  
 
-Each entity supports the recovery workflow.
 
 ---
 
@@ -145,7 +144,7 @@ User
 ↓  
 Raw Tasks  
 ↓  
-Planning Engine  
+Planning Engine (Behavior-aware)    
 ↓  
 DailyPlan  
 ↓  
@@ -163,7 +162,7 @@ config/
 Django project configuration
 
 tasks/  
-Core application
+Core application (Tasks & Planning logic)
 
 services/  
 Business logic  
@@ -209,7 +208,7 @@ Future Mobile App
 - Simple user experience  
 - Minimal cognitive load  
 - Reliable recovery after disruption  
-- Clear separation of business logic  
+- **Behavioral design & healthy gamification**
 
 ---
 
@@ -217,9 +216,8 @@ Future Mobile App
 
 The goal of the MVP is to validate one key hypothesis:
 
-Users need a fast way to recover their day after disruptions.
 
-If the recovery experience works well, the product can expand with more intelligent planning features.
+Users need a fast, psychologically-supported way to recover their day after disruptions.
 
 ---
 
@@ -227,9 +225,9 @@ If the recovery experience works well, the product can expand with more intellig
 
 Possible future features include:
 
-- AI-based planning  
-- AI recovery suggestions  
-- mobile application  
-- calendar integration  
-- analytics and insights  
-- subscriptions
+- AI-based planning & coaching  
+- Advanced behavioral nudges  
+- Mobile application  
+- Calendar integration  
+- Analytics and insights  
+- Deep gamification layers (XP, Streaks, Achievements)
