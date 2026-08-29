@@ -6,10 +6,19 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = [
-            "id", "title", "priority", "estimated_minutes", 
-            "scheduled_date", "first_tiny_step", "good_enough_definition"
+            "id",
+            "title",
+            "priority",
+            "estimated_minutes",
+            "scheduled_date",
+            "first_tiny_step",
+            "good_enough_definition",
+            "postpone_count",
+            "status",
         ]
+        read_only_fields = ["id", "postpone_count"]
 
+        
 class PlannedTaskSerializer(serializers.ModelSerializer):
     task_id = serializers.IntegerField(source="task.id", read_only=True)
     title = serializers.CharField(source="task.title", read_only=True)
