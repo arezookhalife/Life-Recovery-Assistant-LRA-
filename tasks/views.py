@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import DailyPlan, Task
-from .serializers import DailyPlanSerializer, TaskSerializer
+from .models import DailyPlan, Task, Disruption
+from .serializers import DailyPlanSerializer, TaskSerializer, DisruptionSerializer
 from .services.planner import generate_daily_plan
 
 
@@ -36,3 +36,11 @@ class GenerateDailyPlanView(APIView):
         daily_plan = generate_daily_plan(user=request.user, plan_date=today)
         serializer = DailyPlanSerializer(daily_plan)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class DisruptionCreateView(generics.CreateAPIView):
+    serializer_class = DisruptionSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

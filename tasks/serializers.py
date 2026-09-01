@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DailyPlan, PlannedTask, Task
+from .models import DailyPlan, PlannedTask, Task, Disruption  
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -42,3 +42,17 @@ class DailyPlanSerializer(serializers.ModelSerializer):
 
     def get_total_estimated_minutes(self, obj):
         return sum(pt.task.estimated_minutes for pt in obj.planned_tasks.all())
+    
+
+
+class DisruptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Disruption
+        fields = [
+            "id",
+            "daily_plan",
+            "lost_minutes",
+            "reason",
+            "created_at",
+        ]
+        read_only_fields = ["id", "created_at"]    
