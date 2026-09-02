@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DailyPlan, PlannedTask, Task, Disruption  
+from .models import DailyPlan, PlannedTask, Task, Disruption, RecoverySession    
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -55,4 +55,13 @@ class DisruptionSerializer(serializers.ModelSerializer):
             "reason",
             "created_at",
         ]
-        read_only_fields = ["id", "created_at"]    
+        read_only_fields = ["id", "created_at"]  
+
+
+class QuickRecoverySerializer(serializers.ModelSerializer):
+    action_taken = serializers.CharField(required=False, default="quick_restart")
+
+    class Meta:
+        model = RecoverySession
+        fields = ["id", "disruption", "action_taken", "created_at"]
+        read_only_fields = ["id", "created_at"]          

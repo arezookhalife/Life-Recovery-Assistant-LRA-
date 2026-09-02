@@ -5,8 +5,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import DailyPlan, Task, Disruption
-from .serializers import DailyPlanSerializer, TaskSerializer, DisruptionSerializer
+from .serializers import DailyPlanSerializer, TaskSerializer, DisruptionSerializer, QuickRecoverySerializer
 from .services.planner import generate_daily_plan
+from .services.recovery import perform_quick_recovery
 
 
 class TaskListCreateView(generics.ListCreateAPIView):
@@ -44,3 +45,19 @@ class DisruptionCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class QuickRecoveryView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = QuickRecoverySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        disruption = serializer.validated_data["disruption"]
+        
+        result = perform_quick_recovery(
+            disruption=disruption, user=request.user
+        )
+
+        return Response(result, status=status.HTTP_201_CREATED)
