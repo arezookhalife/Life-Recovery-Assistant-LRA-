@@ -65,3 +65,9 @@ class QuickRecoverySerializer(serializers.ModelSerializer):
         model = RecoverySession
         fields = ["id", "disruption", "action_taken", "created_at"]
         read_only_fields = ["id", "created_at"]          
+
+
+class InsightsSerializer(serializers.Serializer):
+    today = serializers.DictField()
+    week = serializers.DictField()
+    recovery = serializers.DictField()

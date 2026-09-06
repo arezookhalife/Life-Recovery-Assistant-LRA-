@@ -4,10 +4,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import DailyPlan, Task, Disruption
-from .serializers import DailyPlanSerializer, TaskSerializer, DisruptionSerializer, QuickRecoverySerializer
+from .models import Task
+from .serializers import DailyPlanSerializer, TaskSerializer, DisruptionSerializer, QuickRecoverySerializer, InsightsSerializer
 from .services.planner import generate_daily_plan
 from .services.recovery import perform_quick_recovery
+from .services.analytics import get_user_insights
 
 
 class TaskListCreateView(generics.ListCreateAPIView):
@@ -61,3 +62,12 @@ class QuickRecoveryView(APIView):
         )
 
         return Response(result, status=status.HTTP_201_CREATED)
+
+
+class UserInsightsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        data = get_user_insights(user=request.user)
+        serializer = InsightsSerializer(data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
