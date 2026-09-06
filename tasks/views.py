@@ -5,10 +5,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Task
-from .serializers import DailyPlanSerializer, TaskSerializer, DisruptionSerializer, QuickRecoverySerializer, InsightsSerializer
+from .serializers import DailyPlanSerializer, TaskSerializer, DisruptionSerializer, QuickRecoverySerializer, InsightsSerializer, RegisterSerializer, UserProfileSerializer
 from .services.planner import generate_daily_plan
 from .services.recovery import perform_quick_recovery
 from .services.analytics import get_user_insights
+from rest_framework.permissions import AllowAny
 
 
 class TaskListCreateView(generics.ListCreateAPIView):
@@ -71,3 +72,16 @@ class UserInsightsView(APIView):
         data = get_user_insights(user=request.user)
         serializer = InsightsSerializer(data)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class RegisterView(generics.CreateAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
+
+
+class CurrentUserView(generics.RetrieveAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
