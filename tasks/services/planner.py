@@ -6,7 +6,7 @@ from tasks.models import Task, DailyPlan, PlannedTask
 DAILY_CAPACITY_MINUTES = 240
 
 
-def generate_daily_plan(user: User, plan_date: date = None):
+def generate_daily_plan(user: User, plan_date: date | None = None) -> DailyPlan:
     """
     Generate today's daily plan for a user.
     Selects pending tasks fitting them within DAILY_CAPACITY_MINUTES:
