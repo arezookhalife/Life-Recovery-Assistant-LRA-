@@ -1,6 +1,7 @@
 from datetime import date
 from django.contrib.auth.models import User
 from tasks.models import Task, DailyPlan, PlannedTask
+from tasks.exceptions import EmptyPlanCandidateError
 
 # Core MVP configuration: Max planned focus time per day (4 hours)
 DAILY_CAPACITY_MINUTES = 240
@@ -42,6 +43,10 @@ def generate_daily_plan(user: User, plan_date: date | None = None) -> DailyPlan:
 
     # Combine lists: Fixed-date tasks go first
     candidate_tasks = list(fixed_tasks) + list(flexible_tasks)
+
+    # Guard clause: Ensure there are candidates to plan
+    if not candidate_tasks:
+        raise EmptyPlanCandidateError("No candidate tasks available to generate a daily plan.")
 
     order = 1
     total_planned_minutes = 0
